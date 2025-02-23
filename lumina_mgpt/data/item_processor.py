@@ -6,8 +6,8 @@ from typing import Dict, List
 from PIL import Image
 import torch
 
-from data.convertsation import Conversation
-import model.chameleon_vae_ori as chameleon_vae_ori
+from .convertsation import Conversation
+from ..model import chameleon_vae_ori as chameleon_vae_ori
 from xllmx.data.data_reader import read_general
 from xllmx.data.item_processor import MMConvItemProcessor
 
