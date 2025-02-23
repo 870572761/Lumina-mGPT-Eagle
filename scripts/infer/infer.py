@@ -29,53 +29,53 @@ generated = inference_solver.generate(
 
 a1, new_image = generated[0], generated[1][0]
 
+exit()
+# # ******************* Image Understanding ******************
+# inference_solver = FlexARInferenceSolver(
+#     model_path="Alpha-VLLM/Lumina-mGPT-7B-512",
+#     precision="bf16",
+#     target_size=512,
+# )
 
-# ******************* Image Understanding ******************
-inference_solver = FlexARInferenceSolver(
-    model_path="Alpha-VLLM/Lumina-mGPT-7B-512",
-    precision="bf16",
-    target_size=512,
-)
+# # "<|image|>" symbol will be replaced with sequence of image tokens before fed to LLM
+# q1 = "Describe the image in detail. <|image|>"
 
-# "<|image|>" symbol will be replaced with sequence of image tokens before fed to LLM
-q1 = "Describe the image in detail. <|image|>"
+# images = [Image.open("image.png")]
+# qas = [[q1, None]]
 
-images = [Image.open("image.png")]
-qas = [[q1, None]]
+# # `len(images)` should be equal to the number of appearance of "<|image|>" in qas
+# generated = inference_solver.generate(
+#     images=images,
+#     qas=qas,
+#     max_gen_len=8192,
+#     temperature=1.0,
+#     logits_processor=inference_solver.create_logits_processor(cfg=4.0, image_top_k=2000),
+# )
 
-# `len(images)` should be equal to the number of appearance of "<|image|>" in qas
-generated = inference_solver.generate(
-    images=images,
-    qas=qas,
-    max_gen_len=8192,
-    temperature=1.0,
-    logits_processor=inference_solver.create_logits_processor(cfg=4.0, image_top_k=2000),
-)
-
-a1 = generated[0]
-# generated[1], namely the list of newly generated images, should typically be empty in this case.
+# a1 = generated[0]
+# # generated[1], namely the list of newly generated images, should typically be empty in this case.
 
 
-# ********************* Omni-Potent *********************
-inference_solver = FlexARInferenceSolver(
-    model_path="Alpha-VLLM/Lumina-mGPT-7B-768-Omni",
-    precision="bf16",
-    target_size=768,
-)
+# # ********************* Omni-Potent *********************
+# inference_solver = FlexARInferenceSolver(
+#     model_path="Alpha-VLLM/Lumina-mGPT-7B-768-Omni",
+#     precision="bf16",
+#     target_size=768,
+# )
 
-# Example: Depth Estimation
-# For more instructions, see demos/demo_image2image.py
-q1 = "Depth estimation. <|image|>"
-images = [Image.open("image.png")]
-qas = [[q1, None]]
+# # Example: Depth Estimation
+# # For more instructions, see demos/demo_image2image.py
+# q1 = "Depth estimation. <|image|>"
+# images = [Image.open("image.png")]
+# qas = [[q1, None]]
 
-generated = inference_solver.generate(
-    images=images,
-    qas=qas,
-    max_gen_len=8192,
-    temperature=1.0,
-    logits_processor=inference_solver.create_logits_processor(cfg=1.0, image_top_k=200),
-)
+# generated = inference_solver.generate(
+#     images=images,
+#     qas=qas,
+#     max_gen_len=8192,
+#     temperature=1.0,
+#     logits_processor=inference_solver.create_logits_processor(cfg=1.0, image_top_k=200),
+# )
 
-a1 = generated[0]
-new_image = generated[1][0]
+# a1 = generated[0]
+# new_image = generated[1][0]

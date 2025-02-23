@@ -13,8 +13,8 @@ from typing import List, Optional
 import gradio as gr
 import torch
 
-from data.item_processor import generate_crop_size_list
-from inference_solver import FlexARInferenceSolver
+from lumina_mgpt.data.item_processor import generate_crop_size_list
+from lumina_mgpt.inference_solver import FlexARInferenceSolver
 from xllmx.util.misc import random_seed
 
 
@@ -154,6 +154,7 @@ def gradio_worker(
     def show_real_prompt():
         return gr.update(visible=True)
 
+    print("begin 1")
     with gr.Blocks(css="#image_input {height: 100% !important}") as demo:
         gr.Markdown("# Lumina-mGPT Image Generation Demo\n")
         with gr.Row() as r:

@@ -9,7 +9,7 @@ import transformers
 from transformers import GenerationConfig, TextStreamer
 from transformers.generation.logits_process import LogitsProcessor, LogitsProcessorList, LogitsWarper
 
-from .data.item_processor import FlexARItemProcessor
+from lumina_mgpt.data.item_processor import FlexARItemProcessor
 from .model.chameleon import ChameleonForConditionalGeneration
 
 

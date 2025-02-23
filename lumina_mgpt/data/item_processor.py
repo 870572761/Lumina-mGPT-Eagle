@@ -7,7 +7,7 @@ from PIL import Image
 import torch
 
 from .convertsation import Conversation
-from ..model import chameleon_vae_ori as chameleon_vae_ori
+from lumina_mgpt.model import chameleon_vae_ori as chameleon_vae_ori
 from xllmx.data.data_reader import read_general
 from xllmx.data.item_processor import MMConvItemProcessor
 
@@ -84,13 +84,16 @@ class FlexARItemProcessor(MMConvItemProcessor):
         #  todo
         #  currently still use the original image tokenizer provided by Meta rather than transformers
         #  because the transformers implementation does not contain the vae decoder
+        local_chameleon_tokenizer_path="/data/lei/localmodel/lumina_mgpt/chameleon/tokenizer"
+        import os
+        assert os.path.exists(local_chameleon_tokenizer_path)
         self.chameleon_ori_vocab = chameleon_vae_ori.VocabInfo(
-            json.load(open("./ckpts/chameleon/tokenizer/text_tokenizer.json", encoding="utf8"))["model"]["vocab"]
+            json.load(open(f"{local_chameleon_tokenizer_path}/text_tokenizer.json", encoding="utf8"))["model"]["vocab"]
         )
         self.chameleon_ori_translation = chameleon_vae_ori.VocabTranslation(self.chameleon_ori_vocab, device="cuda")
         self.chameleon_ori_image_tokenizer = chameleon_vae_ori.ImageTokenizer(
-            cfg_path="./ckpts/chameleon/tokenizer/vqgan.yaml",
-            ckpt_path="./ckpts/chameleon/tokenizer/vqgan.ckpt",
+            cfg_path=f"{local_chameleon_tokenizer_path}/vqgan.yaml",
+            ckpt_path=f"{local_chameleon_tokenizer_path}/vqgan.ckpt",
             device="cuda",
         )
 
