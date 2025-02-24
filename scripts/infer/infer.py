@@ -19,16 +19,18 @@ q1 = f"Generate an image of 768x768 according to the following prompt:\n \
      Image of a dog playing water, and a waterfall is in the background."
 
 # generated: tuple of (generated response, list of generated images)
-generated = inference_solver.generate(
-    images=[],
-    qas=[[q1, None]],
-    max_gen_len=8192,
-    temperature=1.0,
-    logits_processor=inference_solver.create_logits_processor(cfg=4.0, image_top_k=2000),
-)
+import torch
+with torch.no_grad():
+    generated = inference_solver.generate(
+        images=[],
+        qas=[[q1, None]],
+        max_gen_len=8192,
+        temperature=1.0,
+        logits_processor=inference_solver.create_logits_processor(cfg=4.0, image_top_k=2000),
+    )
 
 a1, new_image = generated[0], generated[1][0]
-
+print(a1.shape, new_image.shape)
 exit()
 # # ******************* Image Understanding ******************
 # inference_solver = FlexARInferenceSolver(
