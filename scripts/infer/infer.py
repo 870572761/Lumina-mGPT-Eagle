@@ -19,18 +19,27 @@ q1 = f"Generate an image of 768x768 according to the following prompt:\n \
      Image of a dog playing water, and a waterfall is in the background."
 
 # generated: tuple of (generated response, list of generated images)
+temperature=0
 import torch
+import time
+decoding_time = time.time()
 with torch.no_grad():
     generated = inference_solver.generate(
         images=[],
         qas=[[q1, None]],
         max_gen_len=8192,
-        temperature=1.0,
+        temperature=temperature,
         logits_processor=inference_solver.create_logits_processor(cfg=4.0, image_top_k=2000),
     )
+decoding_time = time.time()-decoding_time
 
 a1, new_image = generated[0], generated[1][0]
-print(a1.shape, new_image.shape)
+print(a1, new_image)
+file_path = f"/home/leihaodong/ICCV25/lumina-mGPT/output_image_T{temperature}.png"
+new_image.save(file_path)  # 保存为 PNG 格式
+print("图像已保存为 output_image.png")
+print(decoding_time)
+# print(a1.shape, new_image.shape)
 exit()
 # # ******************* Image Understanding ******************
 # inference_solver = FlexARInferenceSolver(
